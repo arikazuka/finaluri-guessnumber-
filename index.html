@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #result {
+            font-size: 20px;
+            color: #333;
+        }
+
+        #guess-input {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #guess-button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Guess the Number</h2>
+
+    <label for="guess-input">Enter your guess:</label>
+    <input type="number" id="guess-input" min="1" max="100">
+    <button id="guess-button" onclick="guessNumber()">Guess</button>
+
+    <p id="result"></p>
+
+    <script>
+        let secretNumber, attempts;
+        function generateRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function initializeGame() {
+            secretNumber = generateRandomNumber(1, 100);
+            attempts = 0;
+            document.getElementById("result").innerHTML = "";
+        }
+
+
+
+        function guessNumber() {
+            const userGuess = parseInt(document.getElementById("guess-input").value);
+
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                document.getElementById("result").innerHTML = "Invalid guess. Enter a number between 1 and 100.";
+                return;
+            }
+
+            attempts++;
+
+
+            if (userGuess === secretNumber) {
+                document.getElementById("result").innerHTML = `Congratulations! You guessed the number in ${attempts} attempts.`;
+                initializeGame();
+            }
+            else if (userGuess < secretNumber) {
+                document.getElementById("result").innerHTML = "Wrong guess. Try a higher number.";
+            } else {
+                document.getElementById("result").innerHTML = "Wrong guess. Try a lower number.";
+            }
+        }
+
+
+        initializeGame();
+    </script>
+
+</body>
+
+</html>
